@@ -5,7 +5,7 @@ import {addPost, getPosts} from "../../modules/posts.js"
 function App(props) {
     const {posts} = useSelector(state => state.posts)
     const dispatch = useDispatch()
-    // console.log(posts);
+
     return (
         <div>
             <h1>{posts.map(x => x.title)}</h1>

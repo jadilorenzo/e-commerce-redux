@@ -19,7 +19,8 @@ export default (state = initialState, action) => {
     case GET_POSTS:
       return {
         ...state,
-        posts: action.payload
+        posts: action.payload,
+        isAddingPost: false
       }
     default:
       return state
@@ -37,9 +38,22 @@ export const getPosts = () => {
 }
 
 export const addPost = () => {
-  return dispatch => {
+  return async dispatch => {
+    const response = await fetch(`http://localhost:3333/post/posts`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({title: 'Post', body: 'Hello World!'})
+    });
+    const body = response.json()
+    console.log(body);
+
     dispatch({
       type: ADD_POST
+    })
+    dispatch({
+      type: GET_POSTS
     })
   }
 }

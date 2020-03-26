@@ -32,13 +32,14 @@ databases.map(name => {
       res.json(q_res.rows)
     })
   })
-
-  app.post(`/post/${name}`, (req, res) => {
-    pool.query('INSERT INTO posts (pid, title, body) VALUES ($1, $2, $3, $4);', [v4(), req.body.title, req.body.body], (q_err, q_res) => {
-      console.log(q_res.rows);
-      res.json(q_res.rows)
+  if (name === 'posts') {
+    app.post(`/post/${name}`, (req, res) => {
+      pool.query('INSERT INTO posts (pid, title, body) VALUES ($1, $2, $3);', [v4(), req.body.title, req.body.body], (q_err, q_res) => {
+        console.log(req.body);
+        res.json({type: 'Success', body: req.body})
+      })
     })
-  })
+  }
 })
 
 app.listen(3333)
