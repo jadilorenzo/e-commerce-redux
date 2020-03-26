@@ -8,9 +8,12 @@ function App(props) {
 
     return (
         <div>
-            <h1>{posts.map(x => x.title)}</h1>
+            <ul>{posts.map(x => <li>{x.title}</li>)}</ul>
             <button onClick={() => dispatch(getPosts())}>Get Posts</button>
-            <button onClick={() => dispatch(addPost())}>Add Posts</button>
+            <button onClick={async () => {
+                await dispatch(addPost())
+                await dispatch(getPosts())
+            }}>Add Posts</button>
         </div>
     )
 }

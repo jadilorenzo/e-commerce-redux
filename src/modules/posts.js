@@ -52,8 +52,5 @@ export const addPost = () => {
     dispatch({
       type: ADD_POST
     })
-    dispatch({
-      type: GET_POSTS
-    })
   }
 }
