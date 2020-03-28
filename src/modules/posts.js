@@ -1,3 +1,5 @@
+import {v4} from 'uuid'
+
 const serverSite = 'http://localhost:3333'
 
 export const ADD_POST = 'posts/ADD_POSTS'
@@ -50,20 +52,21 @@ export const getPosts = () => {
     }
 }
 
-export const addPost = (title, body) => {
+export const addPost = (title, postBody) => {
   return async dispatch => {
+    const pid = v4()
     const response = await fetch(`http://localhost:3333/post/posts`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({title, body})
+      body: JSON.stringify({pid, title, body:postBody})
     });
     const body = response.json()
-    console.log(body);
 
     dispatch({
-      type: ADD_POST
+      type: ADD_POST,
+      payload: pid
     })
   }
 }
