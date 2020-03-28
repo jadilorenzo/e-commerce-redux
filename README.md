@@ -13,6 +13,7 @@ yarn
 
 ```bash
 yarn start
+pgm migrate
 yarn server
 ```
 
