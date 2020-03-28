@@ -1,15 +1,20 @@
+import {v4} from 'uuid'
+
 const serverSite = 'http://localhost:3333'
 
 export const ADD_POST = 'posts/ADD_POSTS'
 export const GET_POSTS = 'posts/GET_POSTS'
+export const SET_POST_TITLE = 'posts/SET_POST_TITLE'
+export const SET_POST_BODY = 'posts/SET_POST_BODY'
 
 const initialState = {
   posts: [],
-  isAddingPost: false
+  isAddingPost: false,
+  title: '',
+  body: ''
 }
 
 export default (state = initialState, action) => {
-  console.log(state);
   switch (action.type) {
     case ADD_POST:
       return {
@@ -21,6 +26,16 @@ export default (state = initialState, action) => {
         ...state,
         posts: action.payload,
         isAddingPost: false
+      }
+    case SET_POST_TITLE:
+      return {
+        ...state,
+        title: action.payload
+      }
+    case SET_POST_BODY:
+      return {
+        ...state,
+        body: action.payload
       }
     default:
       return state
@@ -37,20 +52,39 @@ export const getPosts = () => {
     }
 }
 
-export const addPost = () => {
+export const addPost = (title, postBody) => {
   return async dispatch => {
+    const pid = v4()
     const response = await fetch(`http://localhost:3333/post/posts`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({title: 'Post', body: 'Hello World!'})
+      body: JSON.stringify({pid, title, body:postBody})
     });
     const body = response.json()
-    console.log(body);
 
     dispatch({
-      type: ADD_POST
+      type: ADD_POST,
+      payload: pid
+    })
+  }
+}
+
+export const setPostTitle = (title) => {
+  return async dispatch => {
+    dispatch({
+      type: SET_POST_TITLE,
+      payload: title,
+    })
+  }
+}
+
+export const setPostBody = (body) => {
+  return async dispatch => {
+    dispatch({
+      type: SET_POST_BODY,
+      payload: body,
     })
   }
 }

@@ -34,7 +34,7 @@ databases.map(name => {
   })
   if (name === 'posts') {
     app.post(`/post/${name}`, (req, res) => {
-      pool.query('INSERT INTO posts (pid, title, body) VALUES ($1, $2, $3);', [v4(), req.body.title, req.body.body], (q_err, q_res) => {
+      pool.query('INSERT INTO posts (pid, title, body) VALUES ($1, $2, $3);', [req.body.pid, req.body.title, req.body.body], (q_err, q_res) => {
         console.log(req.body);
         res.json({type: 'Success', body: req.body})
       })

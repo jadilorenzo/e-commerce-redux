@@ -14,3 +14,8 @@ body {
 button:disabled {
   opacity: 0.5;
 }
+
+.title {
+  font-size: 3em;
+  border-bottom: black 1px solid;  
+}
